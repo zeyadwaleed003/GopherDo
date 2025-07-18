@@ -51,7 +51,7 @@ func CreateTask(task string) (int, error) {
 	return id, nil
 }
 
-func ReadTasks(ids []int) ([]Task, error) {
+func ReadTasks() ([]Task, error) {
 	tasks := []Task{}
 	err := db.View(func(tx *bolt.Tx) error {
 		b := tx.Bucket(taskBucket)

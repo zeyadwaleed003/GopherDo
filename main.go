@@ -12,7 +12,6 @@ import (
 
 func main() {
 	homeDir, _ := homedir.Dir()
-	fmt.Println(homeDir)
 	dbPath := filepath.Join(homeDir, "tasks.db")
 	must(db.Init(dbPath))
 	must(cmd.Execute())
@@ -20,7 +19,7 @@ func main() {
 
 func must(err error) {
 	if err != nil {
-		fmt.Println(err.Error())
+		fmt.Println(err)
 		os.Exit(1)
 	}
 }
