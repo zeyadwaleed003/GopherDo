@@ -2,9 +2,11 @@ package cmd
 
 import (
 	"fmt"
+	"os"
 	"strconv"
 
 	"github.com/spf13/cobra"
+	"github.com/zeyadwaleed003/GopherDo/db"
 )
 
 var doCmd = &cobra.Command{
@@ -14,14 +16,29 @@ var doCmd = &cobra.Command{
 		ids := []int{}
 		for _, arg := range args {
 			id, err := strconv.Atoi(arg)
-			if err != nil {
-				fmt.Println("Failed to parse the argument: ", arg)
-			} else {
+			if err == nil {
 				ids = append(ids, id)
 			}
 		}
 
-		fmt.Println(ids)
+		tasks, err := db.ReadTasks()
+		if err != nil {
+			fmt.Println("Something went wrong:", err)
+			os.Exit(1)
+		}
+
+		for i, id := range ids {
+			if id <= 0 || id > len(tasks) {
+				continue
+			}
+
+			task := tasks[i]
+			err := db.DeleteTask(task.Key)
+
+			if err != nil {
+				fmt.Printf("Failed to mark %v as completed. Error: %v\n", id, err)
+			}
+		}
 	},
 }
 

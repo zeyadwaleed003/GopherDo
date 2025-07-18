@@ -74,18 +74,10 @@ func ReadTasks() ([]Task, error) {
 	return tasks, nil
 }
 
-func DeleteTasks(ids []int) error {
+func DeleteTask(id int) error {
 	return db.Update(func(tx *bolt.Tx) error {
 		b := tx.Bucket(taskBucket)
-
-		for _, id := range ids {
-			err := b.Delete(itob(id))
-			if err != nil {
-				return err
-			}
-		}
-
-		return nil
+		return b.Delete(itob(id))
 	})
 }
 
