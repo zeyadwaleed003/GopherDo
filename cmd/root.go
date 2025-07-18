@@ -7,8 +7,7 @@ var rootCmd = &cobra.Command{
 	Short: "Task is a simple command-line task manager",
 }
 
-func Execute() {
-	if err := rootCmd.Execute(); err != nil {
-		panic(err)
-	}
+func Execute() error {
+	err := rootCmd.Execute()
+	return err
 }

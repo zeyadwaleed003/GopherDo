@@ -16,6 +16,7 @@ var addCmd = &cobra.Command{
 	},
 }
 
+// This go init function runs automatically before the main() function
 func init() {
 	rootCmd.AddCommand(addCmd)
 }
